@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact | Mocked Monkey</title>
-<meta name="description" content="Get in touch with Mocked Monkey for booking, collaborations, or just to say hi.">
-<link rel="canonical" href="https://mockedmonkey.com/contact.html">
+<title>Shows | Mocked Monkey upcoming dates</title>
+<meta name="description" content="Upcoming shows and street sessions by Mocked Monkey. Check back for new dates in Bologna and beyond.">
+<link rel="canonical" href="https://mockedmonkey.com/shows.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shows | Mocked Monkey">
+<meta property="og:description" content="Upcoming shows and street sessions by Mocked Monkey.">
+<meta property="og:url" content="https://mockedmonkey.com/shows.html">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,11 +23,11 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="marasma.html">Marasma</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="shows.html">Shows</a></li>
+        <li><a href="shows.html" aria-current="page">Shows</a></li>
         <li><a href="video.html">Video</a></li>
         <li><a href="epk.html">EPK</a></li>
         <li><a href="press.html">Press</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -33,41 +37,33 @@
 
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">Booking &amp; contact</p>
-      <h1 style="font-size:clamp(2.8rem,8vw,5.5rem)">Let's talk</h1>
-      <p class="lead">For dates, collaborations, or just to say hi.</p>
+      <p class="eyebrow">Live dates</p>
+      <h1 style="font-size:clamp(2.8rem,8vw,5.5rem)">Shows</h1>
+      <p class="lead">Where to catch Mocked Monkey next, on a stage or on the street.</p>
     </div>
   </section>
 
-  <div class="waveform"></div>
+  <div class="waveform" data-color="noise"></div>
 
   <section>
-    <div class="wrap grid-2">
-      <div>
-        <!-- Replace the action URL with your Formspree endpoint, see README -->
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <div class="form-row">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-row">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-row">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button class="btn accent" type="submit">Send</button>
-        </form>
-      </div>
-      <div>
-        <p class="eyebrow" style="margin-bottom:16px">Direct</p>
-        <ul class="link-list">
-          <li><a href="mailto:mockedmonkey@proton.me">mockedmonkey@proton.me <span class="arrow">→</span></a></li>
-          <li><a href="https://www.instagram.com/mocked.monkey/" target="_blank" rel="noopener">Instagram <span class="arrow">→</span></a></li>
-          <li><a href="https://www.youtube.com/@mockedmonkey" target="_blank" rel="noopener">YouTube <span class="arrow">→</span></a></li>
-        </ul>
+    <div class="wrap">
+      <!--
+        HOW TO ADD A SHOW
+        Duplicate one <li class="show-item"> block below and fill in
+        the date, city/venue, and a details link. Then delete the
+        .empty-state block once you have at least one date listed.
+      -->
+      <ul class="shows-list" style="display:none">
+        <li class="show-item">
+          <span class="date">DD.MM.YY</span>
+          <span class="place">Venue name, City<small>Details / tickets link</small></span>
+        </li>
+      </ul>
+
+      <div class="empty-state">
+        <p class="eyebrow" style="margin-bottom:10px">No shows scheduled right now</p>
+        <p class="dim">New dates are announced first on the fan channel. Check back soon, or follow along so you don't miss the next one.</p>
+        <a class="btn accent" href="contact.html" style="margin-top:20px; display:inline-flex">Get in touch to book a show</a>
       </div>
     </div>
   </section>

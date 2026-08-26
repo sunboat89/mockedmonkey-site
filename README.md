@@ -8,7 +8,8 @@ Sito statico multi-pagina (HTML/CSS/JS puro, nessuna build necessaria), pensato 
 index.html      Home
 marasma.html     Album Marasma
 about.html       Bio / storia del progetto
-live.html        Foto e video
+shows.html       Prossimi live (vuota finché non aggiungi date)
+video.html       Foto e video
 epk.html         EPK web
 press.html       Recensioni
 contact.html     Contatti
@@ -17,6 +18,26 @@ js/main.js       Menu mobile + waveform decorativa
 sitemap.xml      Per Google Search Console
 robots.txt       Permette l'indicizzazione
 ```
+
+## Canale fan (WhatsApp Broadcast)
+
+Su ogni pagina c'è una fascia "Join the fan channel" con un bottone "Coming soon" disattivato.
+Quando crei il tuo canale broadcast WhatsApp, cerca in tutti i file HTML questo blocco:
+
+```html
+<a class="btn placeholder" href="#" aria-disabled="true" title="Coming soon">Coming soon</a>
+```
+
+e sostituiscilo con:
+
+```html
+<a class="btn" href="IL_TUO_LINK_CANALE_WHATSAPP" target="_blank" rel="noopener">Join now</a>
+```
+
+## Aggiungere una data in Shows
+
+In `shows.html`, duplica il blocco `<li class="show-item">` (è commentato nel file), compila data/luogo/link,
+poi rimuovi `style="display:none"` dalla `<ul class="shows-list">` e cancella il blocco `.empty-state`.
 
 ## Cosa devi fare prima di pubblicare
 
