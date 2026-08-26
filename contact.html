@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contatti — Mocked Monkey</title>
+<meta name="description" content="Contatta Mocked Monkey per booking, collaborazioni o semplicemente per dire ciao.">
+<link rel="canonical" href="https://mockedmonkey.com/contact.html">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">Mocked <span>Monkey</span></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav class="main-nav" id="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="marasma.html">Marasma</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="live.html">Live &amp; Video</a></li>
+        <li><a href="epk.html">EPK</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="contact.html" aria-current="page">Contatti</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Booking &amp; contatti</p>
+      <h1 style="font-size:clamp(2.6rem,7vw,4.5rem)">Ascoltiamoci</h1>
+      <p class="lead">Per date, collaborazioni o solo per dire ciao.</p>
+    </div>
+  </section>
+
+  <div class="waveform"></div>
+
+  <section>
+    <div class="wrap grid-2">
+      <div>
+        <!-- Sostituisci l'action con il tuo endpoint Formspree (vedi README) -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-row">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-row">
+            <label for="message">Messaggio</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button class="btn accent" type="submit">Invia</button>
+        </form>
+      </div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:16px">Diretto</p>
+        <ul class="link-list">
+          <li><a href="mailto:mockedmonkey@proton.me">mockedmonkey@proton.me <span class="arrow">→</span></a></li>
+          <li><a href="https://www.instagram.com/mocked.monkey/" target="_blank" rel="noopener">Instagram <span class="arrow">→</span></a></li>
+          <li><a href="https://www.youtube.com/@mockedmonkey" target="_blank" rel="noopener">YouTube <span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><p class="footer-tag">#listeningisloving</p></div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mocked.monkey/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@mockedmonkey" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:mockedmonkey@proton.me">mockedmonkey@proton.me</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mocked Monkey — Alessandro Falchi</span>
+      <span>Bologna, Italia</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
