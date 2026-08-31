@@ -48,19 +48,27 @@
   <section>
     <div class="wrap">
       <!--
-        HOW TO ADD A SHOW
-        Duplicate one <li class="show-item"> block below and fill in
-        the date, city/venue, and a details link. Then delete the
-        .empty-state block once you have at least one date listed.
-      -->
-      <ul class="shows-list" style="display:none">
-        <li class="show-item">
-          <span class="date">DD.MM.YY</span>
-          <span class="place">Venue name, City<small>Details / tickets link</small></span>
-        </li>
-      </ul>
+        HOW TO ADD/REMOVE A SHOW
+        Edit assets/data/shows.json (nothing in this HTML file needs
+        to change). Add or remove objects in the array, e.g.:
 
-      <div class="empty-state">
+        [
+          {
+            "date": "2026-09-15",
+            "displayDate": "15.09.26",
+            "venue": "Locomotiv Club",
+            "city": "Bologna, Italy",
+            "link": "https://example.com/tickets",
+            "linkLabel": "Tickets"
+          }
+        ]
+
+        Leave the file as an empty array [] when there are no shows.
+        Past dates are hidden automatically.
+      -->
+      <ul class="shows-list" id="shows-list" style="display:none"></ul>
+
+      <div class="empty-state" id="shows-empty">
         <p class="eyebrow" style="margin-bottom:10px">No shows scheduled right now</p>
         <p class="dim">New dates are announced first on the fan channel. Check back soon, or follow along so you don't miss the next one.</p>
         <a class="btn accent" href="contact.html" style="margin-top:20px; display:inline-flex">Get in touch to book a show</a>

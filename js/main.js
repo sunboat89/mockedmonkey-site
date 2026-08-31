@@ -21,4 +21,41 @@ document.addEventListener('DOMContentLoaded', () => {
     el.innerHTML = wf;
     el.style.color = el.dataset.color === 'noise' ? 'var(--noise)' : 'var(--listen)';
   });
+
+  // Shows page: load dates from assets/data/shows.json.
+  // Editing that JSON file is all that's needed to add/remove a show.
+  const showsList = document.getElementById('shows-list');
+  const showsEmpty = document.getElementById('shows-empty');
+  if (showsList && showsEmpty) {
+    fetch('assets/data/shows.json')
+      .then(r => r.ok ? r.json() : [])
+      .then(shows => {
+        const today = new Date().toISOString().slice(0, 10);
+        const upcoming = (shows || [])
+          .filter(s => s.date >= today)
+          .sort((a, b) => a.date.localeCompare(b.date));
+
+        if (upcoming.length === 0) {
+          showsEmpty.style.display = '';
+          showsList.style.display = 'none';
+          return;
+        }
+
+        showsList.innerHTML = upcoming.map(s => `
+          <li class="show-item">
+            <span class="date">${s.displayDate || s.date}</span>
+            <span class="place">${s.venue || ''}${s.venue && s.city ? ', ' : ''}${s.city || ''}
+              ${s.link ? `<small><a href="${s.link}" target="_blank" rel="noopener">${s.linkLabel || 'Details'}</a></small>` : ''}
+            </span>
+          </li>`).join('');
+        showsList.style.display = '';
+        showsEmpty.style.display = 'none';
+      })
+      .catch(() => {
+        // JSON missing or malformed: fall back to the empty state
+        // rather than showing a broken page.
+        showsEmpty.style.display = '';
+        showsList.style.display = 'none';
+      });
+  }
 });

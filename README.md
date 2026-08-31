@@ -56,6 +56,44 @@ poi rimuovi `style="display:none"` dalla `<ul class="shows-list">` e cancella il
 
 4. **Dominio personalizzato** — se vuoi mantenere `mockedmonkey.com` su GitHub Pages, aggiungi un file `CNAME` con dentro solo `mockedmonkey.com`, e configura i DNS del dominio (record A verso gli IP di GitHub Pages o CNAME verso `<tuo-utente>.github.io`).
 
+## Aggiungere/rimuovere una data in Shows
+
+Tutto avviene in un solo file: `assets/data/shows.json`. Non serve toccare l'HTML.
+
+Formato:
+
+```json
+[
+  {
+    "date": "2026-09-15",
+    "displayDate": "15.09.26",
+    "venue": "Locomotiv Club",
+    "city": "Bologna, Italy",
+    "link": "https://example.com/tickets",
+    "linkLabel": "Tickets"
+  }
+]
+```
+
+- `date`: formato `YYYY-MM-DD`, usato per ordinare ed escludere automaticamente le date passate
+- `displayDate`: come appare sul sito (es. `15.09.26`)
+- `link`/`linkLabel`: opzionali, per un link a biglietti/dettagli
+- Per rimuovere una data, cancella semplicemente il suo blocco `{ ... }` dall'array
+- Se l'array è vuoto `[]`, la pagina mostra automaticamente "No shows scheduled right now"
+
+Puoi editarlo direttamente su GitHub da telefono: apri il file nel repo, tocca l'icona matita, modifica, Commit changes.
+
+## Dominio personalizzato (mockedmonkey.com)
+
+Il file `CNAME` nella root del repo è già pronto con `mockedmonkey.com`. Per attivarlo:
+
+1. Dal pannello DNS del tuo registrar, aggiungi:
+   - 4 record **A** sull'apex (`@`) verso: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - 1 record **CNAME** per `www` verso `sunboat89.github.io`
+2. Su GitHub → Settings → Pages → Custom domain → conferma `mockedmonkey.com` → attendi la verifica DNS → attiva "Enforce HTTPS"
+
+Il sito resta su GitHub Pages, semplicemente risponde anche sul tuo dominio: nessun bisogno di lasciare GitHub.
+
 ## Come pubblicare su GitHub Pages
 
 ```bash
