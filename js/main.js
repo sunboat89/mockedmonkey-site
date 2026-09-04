@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <polyline points="0,17 15,4 30,29 45,9 60,25 75,2 90,31 105,12 120,22 135,6 150,27 165,15 180,4 195,29 210,10 225,24 240,17 255,17 270,13 285,21 300,17 320,17 340,15 360,19 380,17 400,17 420,16 440,18 460,17 480,17 500,17 520,17 540,17 560,17 580,17 600,17 650,17 700,17 750,17 800,17 850,17 900,17 950,17 1000,17 1050,17 1100,17 1150,17 1200,17"
       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`;
+  document.querySelectorAll('img.cover-art').forEach(img => {
+    img.addEventListener('error', () => {
+      img.classList.add('img-missing');
+      img.alt = img.alt + ' (not uploaded yet)';
+    }, { once: true });
+  });
+
   document.querySelectorAll('.waveform').forEach(el => {
     el.innerHTML = wf;
     el.style.color = el.dataset.color === 'noise' ? 'var(--noise)' : 'var(--listen)';
@@ -28,10 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const showsEmpty = document.getElementById('shows-empty');
   if (showsList && showsEmpty) {
     fetch('assets/data/shows.json')
-      .then(r => r.ok ? r.json() : [])
-      .then(shows => {
+      .then(r => r.ok ? r.json() : { shows: [] })
+      .then(data => {
         const today = new Date().toISOString().slice(0, 10);
-        const upcoming = (shows || [])
+        const upcoming = (data.shows || [])
           .filter(s => s.date >= today)
           .sort((a, b) => a.date.localeCompare(b.date));
 

@@ -236,6 +236,17 @@ section.tight{ padding:56px 0; }
 .img-slot.wide{ aspect-ratio:16/9; }
 .img-slot.square{ aspect-ratio:1/1; }
 
+.cover-art{
+  width:100%; aspect-ratio:4/5; object-fit:cover;
+  border:1px solid var(--line); background:var(--ink-alt);
+}
+.cover-art.img-missing{
+  aspect-ratio:4/5;
+  background:
+    repeating-linear-gradient(135deg, var(--ink-alt), var(--ink-alt) 10px, #262319 10px, #262319 20px);
+  border:1px dashed var(--line);
+}
+
 /* ---------- quote / review ---------- */
 .quote{
   border-left:3px solid var(--listen);

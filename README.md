@@ -94,6 +94,33 @@ Il file `CNAME` nella root del repo è già pronto con `mockedmonkey.com`. Per a
 
 Il sito resta su GitHub Pages, semplicemente risponde anche sul tuo dominio: nessun bisogno di lasciare GitHub.
 
+## Pannello di gestione contenuti (Sveltia CMS)
+
+Il sito ora include un pannello in `/admin` per gestire eventi e foto senza toccare codice.
+Per attivarlo servono due cose da fare tu una volta sola (10 minuti):
+
+**1. Crea una GitHub OAuth App**
+- Vai su github.com → Settings → Developer settings → OAuth Apps → New OAuth App
+- Homepage URL: `https://sunboat89.github.io/mockedmonkey-site/` (o il tuo dominio, quando attivo)
+- Authorization callback URL: la metti dopo il passo 2 (sarà tipo `https://TUO-WORKER.workers.dev/callback`)
+- Salva e copia **Client ID** e genera un **Client secret**
+
+**2. Pubblica il "ponte" di autenticazione (gratis, su Cloudflare)**
+- Crea un account gratuito su cloudflare.com se non ce l'hai
+- Vai su https://github.com/sveltia/sveltia-cms-auth e segui il pulsante "Deploy to Cloudflare"
+- Quando richiesto, inserisci il Client ID e Client secret del passo 1 come variabili d'ambiente (`GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`)
+- Al termine avrai un URL tipo `https://sveltia-cms-auth.TUO-NOME.workers.dev`
+- Torna nella OAuth App di GitHub (passo 1) e completa la callback URL con `https://sveltia-cms-auth.TUO-NOME.workers.dev/callback`
+
+**3. Collega tutto nel sito**
+- Apri `admin/config.yml` in questo repo
+- Sostituisci `https://REPLACE-WITH-YOUR-WORKER-URL` con l'URL del tuo worker (passo 2)
+- Salva/commit
+
+Fatto questo, vai su `https://sunboat89.github.io/mockedmonkey-site/admin/` (o `tuodominio.com/admin/`), fai login con GitHub, e avrai un form per aggiungere/rimuovere eventi e una libreria media per caricare le foto direttamente nei percorsi giusti (`assets/images/...`), sostituendo i placeholder.
+
+Se preferisci saltare questo setup per ora, il sito continua a funzionare normalmente: editi `assets/data/shows.json` a mano su GitHub come prima.
+
 ## Come pubblicare su GitHub Pages
 
 ```bash
