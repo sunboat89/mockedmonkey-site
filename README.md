@@ -1,4 +1,4 @@
-# Mocked Monkey — sito web (bozza)
+# Mocked Monkey — sito web
 
 Sito statico multi-pagina (HTML/CSS/JS puro, nessuna build necessaria), pensato per GitHub Pages.
 
