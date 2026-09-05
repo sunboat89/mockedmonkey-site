@@ -1,3 +1,22 @@
 {
-  "shows": []
+  "shows": [
+    {
+      "date": "2026-09-08",
+      "displayDate": "08.09.26",
+      "venue": "Scena Futura Contest — Pontelungo Estate '26",
+      "city": "Via Agucchi 121/14, Bologna, Italy"
+    },
+    {
+      "date": "2026-09-20",
+      "displayDate": "20.09.26",
+      "venue": "Sbadabam Fest",
+      "city": "Giardini Fava, Bologna, Italy"
+    },
+    {
+      "date": "2026-10-04",
+      "displayDate": "04.10.26",
+      "venue": "WoofStock Festival",
+      "city": "Parco del Cjiastenar, Fagagna (UD), Italy"
+    }
+  ]
 }
