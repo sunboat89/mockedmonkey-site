@@ -1,6 +1,6 @@
-# Mocked Monkey — sito web (bozza)
+# Mocked Monkey — sito web
 
-Sito statico multi-pagina (HTML/CSS/JS puro, nessuna build necessaria), pensato per GitHub Pages.
+Sito statico multi-pagina (HTML/CSS/JS puro, nessuna build necessaria), ospitato su GitHub Pages.
 
 ## Struttura
 
@@ -8,136 +8,88 @@ Sito statico multi-pagina (HTML/CSS/JS puro, nessuna build necessaria), pensato 
 index.html      Home
 marasma.html     Album Marasma
 about.html       Bio / storia del progetto
-shows.html       Prossimi live (vuota finché non aggiungi date)
+shows.html       Prossimi live (mostra "no shows" finché non aggiungi date)
 video.html       Foto e video
 epk.html         EPK web
 press.html       Recensioni
 contact.html     Contatti
 css/style.css    Stile
-js/main.js       Menu mobile + waveform decorativa
+js/main.js       Menu mobile + waveform decorativa + logica Shows
 sitemap.xml      Per Google Search Console
 robots.txt       Permette l'indicizzazione
+assets/data/shows.json   Dati degli eventi (vedi sotto)
+assets/images/           Foto del sito
 ```
+
+## Come aggiornare il sito (eventi, foto, testi)
+
+Non serve nessun pannello o account: **basta chiederlo a Claude in chat**. Manda un messaggio tipo:
+- "Aggiungi un concerto il 15 ottobre al Locomotiv Club di Bologna, link biglietti: ..."
+- "Carica questa foto come copertina di Marasma" (allegando l'immagine)
+- "Cambia questo testo nella pagina About"
+
+Serve solo un **token GitHub temporaneo** per pubblicare le modifiche (fine-grained, scope Contents: Read and write, solo su questo repo, scadenza 7 giorni). Te lo richiedo io quando serve, con le istruzioni passo passo. Dopo puoi revocarlo su GitHub → Settings → Developer settings → Personal access tokens.
+
+### Formato di assets/data/shows.json (per riferimento)
+
+```json
+{
+  "shows": [
+    {
+      "date": "2026-09-15",
+      "displayDate": "15.09.26",
+      "venue": "Locomotiv Club",
+      "city": "Bologna, Italy",
+      "link": "https://example.com/tickets",
+      "linkLabel": "Tickets"
+    }
+  ]
+}
+```
+
+Le date passate spariscono da sole dalla pagina Shows (ordinamento e filtro automatico via JS).
+
+### Foto
+
+Le immagini nel sito sono già collegate ai percorsi giusti in `assets/images/` (copertina Marasma, ritratto, gallery, foto stampa). Finché il file reale non è presente, il sito mostra automaticamente un riquadro placeholder al posto della foto rotta, così non si vede mai un'icona di errore.
 
 ## Canale fan (WhatsApp Broadcast)
 
-Su ogni pagina c'è una fascia "Join the fan channel" con un bottone "Coming soon" disattivato.
-Quando crei il tuo canale broadcast WhatsApp, cerca in tutti i file HTML questo blocco:
-
-```html
-<a class="btn placeholder" href="#" aria-disabled="true" title="Coming soon">Coming soon</a>
-```
-
-e sostituiscilo con:
-
-```html
-<a class="btn" href="IL_TUO_LINK_CANALE_WHATSAPP" target="_blank" rel="noopener">Join now</a>
-```
-
-## Aggiungere una data in Shows
-
-In `shows.html`, duplica il blocco `<li class="show-item">` (è commentato nel file), compila data/luogo/link,
-poi rimuovi `style="display:none"` dalla `<ul class="shows-list">` e cancella il blocco `.empty-state`.
-
-## Cosa devi fare prima di pubblicare
-
-1. **Immagini** — al posto dei riquadri tratteggiati "img-slot" (placeholder), inserisci le tue foto reali in `assets/images/` con questi nomi/percorsi (o cambia i percorsi negli HTML):
-   - `assets/images/marasma-cover.jpg` (copertina disco)
-   - `assets/images/portrait.jpg` (foto ritratto, pagina About)
-   - `assets/images/gallery/01.jpg` ... `06.jpg` (foto live/busking)
-   - `assets/images/press/press-01.jpg` ... `03.jpg` (foto stampa alta risoluzione)
-   - `assets/images/share.jpg` (immagine di anteprima per condivisioni social, 1200×630px consigliata)
-
-   Poi, in ogni file HTML, sostituisci il blocco `<div class="img-slot">...</div>` con un normale `<img src="..." alt="...">`.
-
-2. **EPK in PDF** — carica il tuo PDF esistente in `assets/docs/mocked-monkey-epk.pdf` (il link nella pagina EPK punta già lì).
-
-3. **Form contatti** — GitHub Pages non gestisce form lato server. La pagina `contact.html` è pronta per [Formspree](https://formspree.io) (gratis fino a 50 messaggi/mese): crea un account, crea un form, e sostituisci `YOUR_FORM_ID` nell'attributo `action` con il tuo ID.
-
-4. **Dominio personalizzato** — se vuoi mantenere `mockedmonkey.com` su GitHub Pages, aggiungi un file `CNAME` con dentro solo `mockedmonkey.com`, e configura i DNS del dominio (record A verso gli IP di GitHub Pages o CNAME verso `<tuo-utente>.github.io`).
-
-## Aggiungere/rimuovere una data in Shows
-
-Tutto avviene in un solo file: `assets/data/shows.json`. Non serve toccare l'HTML.
-
-Formato:
-
-```json
-[
-  {
-    "date": "2026-09-15",
-    "displayDate": "15.09.26",
-    "venue": "Locomotiv Club",
-    "city": "Bologna, Italy",
-    "link": "https://example.com/tickets",
-    "linkLabel": "Tickets"
-  }
-]
-```
-
-- `date`: formato `YYYY-MM-DD`, usato per ordinare ed escludere automaticamente le date passate
-- `displayDate`: come appare sul sito (es. `15.09.26`)
-- `link`/`linkLabel`: opzionali, per un link a biglietti/dettagli
-- Per rimuovere una data, cancella semplicemente il suo blocco `{ ... }` dall'array
-- Se l'array è vuoto `[]`, la pagina mostra automaticamente "No shows scheduled right now"
-
-Puoi editarlo direttamente su GitHub da telefono: apri il file nel repo, tocca l'icona matita, modifica, Commit changes.
+Su ogni pagina c'è una fascia "Join the fan channel" con un bottone "Coming soon" disattivato. Quando il canale è pronto, basta chiedere a Claude di collegare il link: lo aggiorna su tutte le pagine in un colpo solo.
 
 ## Dominio personalizzato (mockedmonkey.com)
 
-Il file `CNAME` nella root del repo è già pronto con `mockedmonkey.com`. Per attivarlo:
+Il sito resta su GitHub Pages, risponde anche su mockedmonkey.com senza bisogno di lasciare GitHub:
 
 1. Dal pannello DNS del tuo registrar, aggiungi:
    - 4 record **A** sull'apex (`@`) verso: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - 1 record **CNAME** per `www` verso `sunboat89.github.io`
 2. Su GitHub → Settings → Pages → Custom domain → conferma `mockedmonkey.com` → attendi la verifica DNS → attiva "Enforce HTTPS"
 
-Il sito resta su GitHub Pages, semplicemente risponde anche sul tuo dominio: nessun bisogno di lasciare GitHub.
+Nota: appena il file `CNAME` è presente nel repo, GitHub reindirizza automaticamente `sunboat89.github.io/mockedmonkey-site/` verso il tuo dominio, quindi da quel momento non potrai più testare l'URL github.io finché il DNS non è configurato. Aggiungilo solo quando sei pronto a completare anche il lato DNS.
 
-## Pannello di gestione contenuti (Sveltia CMS)
+## Form contatti
 
-Il sito ora include un pannello in `/admin` per gestire eventi e foto senza toccare codice.
-Per attivarlo servono due cose da fare tu una volta sola (10 minuti):
+GitHub Pages non gestisce form lato server. La pagina `contact.html` è pronta per [Formspree](https://formspree.io) (gratis fino a 50 messaggi/mese): crea un account, crea un form, e sostituisci `YOUR_FORM_ID` nell'attributo `action` con il tuo ID.
 
-**1. Crea una GitHub OAuth App**
-- Vai su github.com → Settings → Developer settings → OAuth Apps → New OAuth App
-- Homepage URL: `https://sunboat89.github.io/mockedmonkey-site/` (o il tuo dominio, quando attivo)
-- Authorization callback URL: la metti dopo il passo 2 (sarà tipo `https://TUO-WORKER.workers.dev/callback`)
-- Salva e copia **Client ID** e genera un **Client secret**
+## EPK in PDF
 
-**2. Pubblica il "ponte" di autenticazione (gratis, su Cloudflare)**
-- Crea un account gratuito su cloudflare.com se non ce l'hai
-- Vai su https://github.com/sveltia/sveltia-cms-auth e segui il pulsante "Deploy to Cloudflare"
-- Quando richiesto, inserisci il Client ID e Client secret del passo 1 come variabili d'ambiente (`GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`)
-- Al termine avrai un URL tipo `https://sveltia-cms-auth.TUO-NOME.workers.dev`
-- Torna nella OAuth App di GitHub (passo 1) e completa la callback URL con `https://sveltia-cms-auth.TUO-NOME.workers.dev/callback`
+Carica il tuo PDF in `assets/docs/mocked-monkey-epk.pdf` (il link nella pagina EPK punta già lì).
 
-**3. Collega tutto nel sito**
-- Apri `admin/config.yml` in questo repo
-- Sostituisci `https://REPLACE-WITH-YOUR-WORKER-URL` con l'URL del tuo worker (passo 2)
-- Salva/commit
-
-Fatto questo, vai su `https://sunboat89.github.io/mockedmonkey-site/admin/` (o `tuodominio.com/admin/`), fai login con GitHub, e avrai un form per aggiungere/rimuovere eventi e una libreria media per caricare le foto direttamente nei percorsi giusti (`assets/images/...`), sostituendo i placeholder.
-
-Se preferisci saltare questo setup per ora, il sito continua a funzionare normalmente: editi `assets/data/shows.json` a mano su GitHub come prima.
-
-## Come pubblicare su GitHub Pages
+## Come ripubblicare manualmente su GitHub Pages (se non passi da Claude)
 
 ```bash
-git init
 git add .
-git commit -m "Sito Mocked Monkey"
-git branch -M main
-git remote add origin https://github.com/<tuo-utente>/<repo>.git
-git push -u origin main
+git commit -m "Aggiornamento sito"
+git push origin main
 ```
 
-Poi su GitHub: **Settings → Pages → Source: Deploy from branch → main / (root)**.
+Impostazioni Pages: **Settings → Pages → Source: Deploy from branch → main / (root)**.
 
 ## Perché questa struttura aiuta la SEO rispetto a Carrd
 
 - Ogni pagina ha un proprio `<title>` e `meta description` (Carrd ne aveva uno solo per tutto il sito)
 - `sitemap.xml` + `robots.txt` per Google Search Console
-- Dati strutturati `schema.org` (`MusicGroup` in home, `MusicAlbum` in marasma.html) — aiutano Google a capire chi sei e a mostrare rich result
-- HTML semantico, heading gerarchici, `alt` sulle immagini (da aggiungere quando carichi le foto reali)
-- URL puliti e distinti per ogni sezione (es. `/marasma.html`, `/press.html`), invece di ancore su una singola pagina
+- Dati strutturati `schema.org` (`MusicGroup` in home, `MusicAlbum` in marasma.html): aiutano Google a capire chi sei e a mostrare rich result
+- HTML semantico, heading gerarchici, `alt` sulle immagini
+- URL puliti e distinti per ogni sezione, invece di ancore su una singola pagina
