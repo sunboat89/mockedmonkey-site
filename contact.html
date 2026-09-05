@@ -20,7 +20,7 @@
         <li><a href="marasma.html">Marasma</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="shows.html">Shows</a></li>
-        <li><a href="video.html">Video</a></li>
+        <li><a href="video.html">Media</a></li>
         <li><a href="epk.html">EPK</a></li>
         <li><a href="press.html">Press</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
@@ -44,14 +44,22 @@
   <section>
     <div class="wrap grid-2">
       <div>
-        <!-- Replace the action URL with your Formspree endpoint, see README -->
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <!--
+          Powered by Web3Forms (web3forms.com): free, no account needed.
+          Get your access key: go to web3forms.com, enter mockedmonkey@proton.me,
+          you'll receive a key by email instantly. Paste it below in place of
+          YOUR_ACCESS_KEY_HERE. Submissions are emailed straight to that inbox.
+        -->
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New message from mockedmonkey.com">
+          <input type="text" name="botcheck" style="display:none">
           <div class="form-row">
-            <label for="name">Name</label>
+            <label for="name">Your name</label>
             <input type="text" id="name" name="name" required>
           </div>
           <div class="form-row">
-            <label for="email">Email</label>
+            <label for="email">Your email</label>
             <input type="email" id="email" name="email" required>
           </div>
           <div class="form-row">
@@ -59,6 +67,7 @@
             <textarea id="message" name="message" required></textarea>
           </div>
           <button class="btn accent" type="submit">Send</button>
+          <p id="form-status" class="dim" style="margin-top:14px; font-family:var(--mono); font-size:.85rem"></p>
         </form>
       </div>
       <div>
@@ -95,7 +104,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Mocked Monkey, Alessandro Falchi</span>
+      <span>© 2025 Mocked Monkey, Alessandro Falchi</span>
       <span>Bologna, Italy</span>
     </div>
   </div>

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Inject the waveform divider into every .waveform placeholder.
-  // Path goes from jagged/noisy (left) to a calm even line (right) —
+  // Path goes from jagged/noisy (left) to a calm even line (right):
   // the record's arc from chaos into listening.
   const wf = `
   <svg viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
@@ -28,6 +28,37 @@ document.addEventListener('DOMContentLoaded', () => {
     el.innerHTML = wf;
     el.style.color = el.dataset.color === 'noise' ? 'var(--noise)' : 'var(--listen)';
   });
+
+  // Contact form: Web3Forms, submitted via fetch so the person
+  // gets an inline confirmation instead of leaving the page.
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    const status = document.getElementById('form-status');
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      status.textContent = 'Sending...';
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(contactForm)
+        });
+        const data = await res.json();
+        if (data.success) {
+          status.textContent = 'Message sent. Thanks, you will hear back soon.';
+          contactForm.reset();
+        } else {
+          status.textContent = 'Something went wrong. Please try again or email mockedmonkey@proton.me directly.';
+        }
+      } catch (err) {
+        status.textContent = 'Network error. Please try again or email mockedmonkey@proton.me directly.';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
 
   // Shows page: load dates from assets/data/shows.json.
   // Editing that JSON file is all that's needed to add/remove a show.
@@ -48,13 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        showsList.innerHTML = upcoming.map(s => `
+        showsList.innerHTML = upcoming.map(s => {
+          const mapQuery = encodeURIComponent([s.venue, s.city].filter(Boolean).join(', '));
+          const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+          return `
           <li class="show-item">
             <span class="date">${s.displayDate || s.date}</span>
             <span class="place">${s.venue || ''}${s.venue && s.city ? ', ' : ''}${s.city || ''}
-              ${s.link ? `<small><a href="${s.link}" target="_blank" rel="noopener">${s.linkLabel || 'Details'}</a></small>` : ''}
+              <small>
+                ${s.link ? `<a href="${s.link}" target="_blank" rel="noopener">${s.linkLabel || 'Details'}</a> &middot; ` : ''}<a href="${mapUrl}" target="_blank" rel="noopener">Map</a>
+              </small>
             </span>
-          </li>`).join('');
+          </li>`;
+        }).join('');
         showsList.style.display = '';
         showsEmpty.style.display = 'none';
       })

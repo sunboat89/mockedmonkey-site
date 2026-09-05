@@ -1,5 +1,5 @@
 /* ============================================================
-   MOCKED MONKEY — stylesheet
+   MOCKED MONKEY, stylesheet
    Concept: street flyer / gig poster stapled to a pole in Bologna.
    Marasma = chaos/turmoil (IT). The album goes noise -> listening.
    ============================================================ */
@@ -12,9 +12,9 @@
   --paper:      #efeae0;   /* flyer paper */
   --paper-dim:  #b3ad9d;
   --line:       rgba(239,234,224,.14);
-  --noise:      #b5482e;   /* rust — chaos / the escape */
+  --noise:      #b5482e;   /* rust, chaos / the escape */
   --noise-dim:  #7c3220;
-  --listen:     #6d8f85;   /* dusty teal — listening / resolution */
+  --listen:     #6d8f85;   /* dusty teal, listening / resolution */
   --listen-dim: #3f5a53;
 
   --display: 'Big Shoulders Display', sans-serif;
@@ -130,10 +130,10 @@ nav.main-nav a[aria-current="page"]{
   nav.main-nav a{ display:block; padding:14px 0; border-bottom:none; }
 }
 
-/* ---------- waveform divider — the signature element ----------
+/* ---------- waveform divider, the signature element ----------
    A hand-set "listening" waveform: it separates every section,
    visually enacting the record's arc from jagged noise (left)
-   to a calm even line (right) — noise settling into listening. */
+   to a calm even line (right): noise settling into listening. */
 .waveform{
   width:100%; height:34px;
   margin:0 0 0 0;
@@ -219,6 +219,16 @@ section.tight{ padding:56px 0; }
   font-family:var(--mono);
 }
 .tracklist .num{ color:var(--noise); width:2ch; }
+
+.factlist{ list-style:none; font-family:var(--mono); font-size:.95rem; }
+.factlist li{
+  position:relative; padding:10px 0 10px 22px;
+  border-bottom:1px solid var(--line);
+}
+.factlist li::before{
+  content:"•"; position:absolute; left:0; color:var(--noise);
+  font-size:1.2em; line-height:1;
+}
 
 /* ---------- image placeholder (until real assets are dropped in) ---------- */
 .img-slot{
