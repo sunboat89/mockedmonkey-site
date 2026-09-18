@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="date">${s.displayDate || s.date}</span>
             <span class="place">${s.venue || ''}${s.venue && s.city ? ', ' : ''}${s.city || ''}
               <small>
-                ${s.link ? `<a href="${s.link}" target="_blank" rel="noopener">${s.linkLabel || 'Details'}</a> &middot; ` : ''}<a href="${mapUrl}" target="_blank" rel="noopener">Map</a>
+                ${s.link ? `<a href="${s.link}" target="_blank" rel="noopener">${s.linkLabel || 'Details'}</a> &middot; ` : ''}<a href="${mapUrl}" target="_blank" rel="noopener" class="map-pin" aria-label="Open in Google Maps" title="Open in Google Maps">📍</a>
               </small>
             </span>
           </li>`;
