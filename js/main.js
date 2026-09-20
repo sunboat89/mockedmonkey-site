@@ -94,6 +94,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
         showsList.style.display = '';
         showsEmpty.style.display = 'none';
+
+        // Build MusicEvent structured data straight from the same data
+        // that drives the visible list above, so the two can never drift
+        // out of sync the way a hand-written copy would.
+        const COUNTRY_CODES = { 'italy': 'IT', 'italia': 'IT' };
+        function parseAddress(cityField) {
+          const parts = (cityField || '').split(',').map(p => p.trim()).filter(Boolean);
+          const address = { '@type': 'PostalAddress' };
+          if (parts.length >= 3) {
+            address.streetAddress = parts[0];
+            address.addressLocality = parts[1];
+            address.addressCountry = COUNTRY_CODES[parts[parts.length - 1].toLowerCase()] || parts[parts.length - 1];
+          } else if (parts.length === 2) {
+            address.addressLocality = parts[0];
+            address.addressCountry = COUNTRY_CODES[parts[1].toLowerCase()] || parts[1];
+          } else if (parts.length === 1) {
+            address.addressLocality = parts[0];
+          }
+          return address;
+        }
+
+        const eventImage = 'https://mockedmonkey.com/assets/images/marasma-cover.jpg';
+        const graph = upcoming.map(s => ({
+          '@type': 'MusicEvent',
+          name: `Mocked Monkey at ${s.venue || 'live'}`,
+          startDate: s.date,
+          endDate: s.date,
+          eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+          eventStatus: 'https://schema.org/EventScheduled',
+          description: `Mocked Monkey live at ${s.venue || ''}${s.venue && s.city ? ', ' : ''}${s.city || ''}.`,
+          image: eventImage,
+          location: {
+            '@type': 'Place',
+            name: s.venue || '',
+            address: parseAddress(s.city)
+          },
+          organizer: { '@type': 'Organization', name: s.venue || 'Mocked Monkey' },
+          performer: { '@type': 'MusicGroup', name: 'Mocked Monkey', url: 'https://mockedmonkey.com/' },
+          url: 'https://mockedmonkey.com/shows'
+        }));
+
+        const ld = document.createElement('script');
+        ld.type = 'application/ld+json';
+        ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+        document.head.appendChild(ld);
       })
       .catch(() => {
         // JSON missing or malformed: fall back to the empty state
