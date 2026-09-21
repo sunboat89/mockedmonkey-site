@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  // If someone (or Googlebot) lands on /index.html directly, send them to
+  // the clean root URL so it isn't discoverable as a separate live page.
+  if (location.pathname.endsWith('/index.html')) {
+    location.replace('/' + location.search + location.hash);
+  }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mocked Monkey | Indie / Alt Rock from Bologna, Italy</title>
 <meta name="description" content="Mocked Monkey is the indie/alt rock project of Alessandro Falchi, born on the streets of Bologna. Listen to Marasma, the 2025 concept album. #listeningisloving">
